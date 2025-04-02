@@ -1,13 +1,14 @@
+import { test, expect } from '@playwright/test';
 /// <reference types="cypress" />
 
 context('Network Requests', () => {
-  beforeEach(() => {
+  test.beforeEach(async ({ page }) => {
     await page.goto('https://example.cypress.io/commands/network-requests')
   })
 
   // Manage HTTP requests in your app
 
-  it('cy.request() - make an XHR request', () => {
+  test('cy.request() - make an XHR request', async ({ page }) => {
     // https://on.cypress.io/request
     cy.request('https://jsonplaceholder.cypress.io/comments')
       .should((response) => {
@@ -20,7 +21,7 @@ context('Network Requests', () => {
       })
   })
 
-  it('cy.request() - verify response using BDD syntax', () => {
+  test('cy.request() - verify response using BDD syntax', async ({ page }) => {
     cy.request('https://jsonplaceholder.cypress.io/comments')
     .then((response) => {
       // https://on.cypress.io/assertions
@@ -30,7 +31,7 @@ context('Network Requests', () => {
     })
   })
 
-  it('cy.request() with query parameters', () => {
+  test('cy.request() with query parameters', async ({ page }) => {
     // will execute request
     // https://jsonplaceholder.cypress.io/comments?postId=1&id=3
     cy.request({
@@ -50,7 +51,7 @@ context('Network Requests', () => {
     })
   })
 
-  it('cy.request() - pass result to the second request', () => {
+  test('cy.request() - pass result to the second request', async ({ page }) => {
     // first, let's find out the userId of the first user we have
     cy.request('https://jsonplaceholder.cypress.io/users?_limit=1')
       .its('body') // yields the response object
@@ -86,7 +87,7 @@ context('Network Requests', () => {
       })
   })
 
-  it('cy.request() - save response in the shared test context', () => {
+  test('cy.request() - save response in the shared test context', async ({ page }) => {
     // https://on.cypress.io/variables-and-aliases
     cy.request('https://jsonplaceholder.cypress.io/users?_limit=1')
       .its('body').its('0') // yields the first element of the returned list
@@ -113,7 +114,7 @@ context('Network Requests', () => {
       })
   })
 
-  it('cy.intercept() - route responses to matching requests', () => {
+  test('cy.intercept() - route responses to matching requests', async ({ page }) => {
     // https://on.cypress.io/intercept
 
     let message = 'whoa, this comment does not exist'
@@ -123,7 +124,7 @@ context('Network Requests', () => {
 
     // we have code that gets a comment when
     // the button is clicked in scripts.js
-    cy.get('.network-btn').click()
+    const networkBtn = await page.locator('.network-btn').click()
 
     // https://on.cypress.io/wait
     cy.wait('@getComment').its('response.statusCode').should('be.oneOf', [200, 304])
@@ -133,7 +134,7 @@ context('Network Requests', () => {
 
     // we have code that posts a comment when
     // the button is clicked in scripts.js
-    cy.get('.network-post').click()
+    const networkPost = await page.locator('.network-post').click()
     cy.wait('@postComment').should(({ request, response }) => {
       expect(request.body).to.include('email')
       expect(request.headers).to.have.property('content-type')
@@ -153,11 +154,11 @@ context('Network Requests', () => {
 
     // we have code that puts a comment when
     // the button is clicked in scripts.js
-    cy.get('.network-put').click()
+    const networkPut = await page.locator('.network-put').click()
 
     cy.wait('@putComment')
 
     // our 404 statusCode logic in scripts.js executed
-    cy.get('.network-put-comment').should('contain', message)
+    const networkPutComment = await page.locator('.network-put-comment').should('contain', message)
   })
 })

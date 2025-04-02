@@ -1,11 +1,12 @@
+import { test, expect } from '@playwright/test';
 /// <reference types="cypress" />
 
 context('Misc', () => {
-  beforeEach(() => {
+  test.beforeEach(async ({ page }) => {
     await page.goto('https://example.cypress.io/commands/misc')
   })
 
-  it('cy.exec() - execute a system command', () => {
+  test('cy.exec() - execute a system command', async ({ page }) => {
     // execute a system command.
     // so you can take actions necessary for
     // your test outside the scope of Cypress.
@@ -52,17 +53,17 @@ context('Misc', () => {
     }
   })
 
-  it('cy.focused() - get the DOM element that has focus', () => {
+  test('cy.focused() - get the DOM element that has focus', async ({ page }) => {
     // https://on.cypress.io/focused
-    cy.get('.misc-form').find('#name').click()
+    const miscForm = await page.locator('.misc-form').find('#name').click()
     cy.focused().should('have.id', 'name')
 
-    cy.get('.misc-form').find('#description').click()
+    const miscForm = await page.locator('.misc-form').find('#description').click()
     cy.focused().should('have.id', 'description')
   })
 
   context('Cypress.Screenshot', function () {
-    it('cy.screenshot() - take a screenshot', () => {
+    test('cy.screenshot() - take a screenshot', async ({ page }) => {
       // https://on.cypress.io/screenshot
       cy.screenshot('my-image')
     })
@@ -81,7 +82,7 @@ context('Misc', () => {
     })
   })
 
-  it('cy.wrap() - wrap an object', () => {
+  test('cy.wrap() - wrap an object', async ({ page }) => {
     // https://on.cypress.io/wrap
     cy.wrap({ foo: 'bar' })
       .should('have.property', 'foo')

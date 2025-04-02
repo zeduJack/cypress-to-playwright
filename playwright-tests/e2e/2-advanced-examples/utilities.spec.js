@@ -1,11 +1,12 @@
+import { test, expect } from '@playwright/test';
 /// <reference types="cypress" />
 
 context('Utilities', () => {
-  beforeEach(() => {
+  test.beforeEach(async ({ page }) => {
     await page.goto('https://example.cypress.io/utilities')
   })
 
-  it('Cypress._ - call a lodash method', () => {
+  test('Cypress._ - call a lodash method', async ({ page }) => {
     // https://on.cypress.io/_
     cy.request('https://jsonplaceholder.cypress.io/users')
       .then((response) => {
@@ -15,7 +16,7 @@ context('Utilities', () => {
       })
   })
 
-  it('Cypress.$ - call a jQuery method', () => {
+  test('Cypress.$ - call a jQuery method', async ({ page }) => {
     // https://on.cypress.io/$
     let $li = Cypress.$('.utility-jquery li:first')
 
@@ -24,9 +25,9 @@ context('Utilities', () => {
     cy.wrap($li).should('have.class', 'active')
   })
 
-  it('Cypress.Blob - blob utilities and base64 string conversion', () => {
+  test('Cypress.Blob - blob utilities and base64 string conversion', async ({ page }) => {
     // https://on.cypress.io/blob
-    cy.get('.utility-blob').then(($div) => {
+    const utilityBlob = await page.locator('.utility-blob').then(($div) => {
       // https://github.com/nolanlawson/blob-util#imgSrcToDataURL
       // get the dataUrl string for the javascript-logo
       return Cypress.Blob.imgSrcToDataURL('https://example.cypress.io/assets/img/javascript-logo.png', undefined, 'anonymous')
@@ -39,13 +40,13 @@ context('Utilities', () => {
         // append the image
         $div.append(img)
 
-        cy.get('.utility-blob img').click()
-        cy.get('.utility-blob img').should('have.attr', 'src', dataUrl)
+        const utilityBlobImg = await page.locator('.utility-blob img').click()
+        const utilityBlobImg = await page.locator('.utility-blob img').should('have.attr', 'src', dataUrl)
       })
     })
   })
 
-  it('Cypress.minimatch - test out glob patterns against strings', () => {
+  test('Cypress.minimatch - test out glob patterns against strings', async ({ page }) => {
     // https://on.cypress.io/minimatch
     let matching = Cypress.minimatch('/users/1/comments', '/users/*/comments', {
       matchBase: true,
@@ -75,7 +76,7 @@ context('Utilities', () => {
     expect(matching, 'comments').to.be.false
   })
 
-  it('Cypress.Promise - instantiate a bluebird promise', () => {
+  test('Cypress.Promise - instantiate a bluebird promise', async ({ page }) => {
     // https://on.cypress.io/promise
     let waited = false
 

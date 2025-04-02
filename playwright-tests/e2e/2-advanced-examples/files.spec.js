@@ -1,3 +1,4 @@
+import { test, expect } from '@playwright/test';
 /// <reference types="cypress" />
 
 /// JSON fixture file can be loaded directly using
@@ -5,7 +6,7 @@
 const requiredExample = require('../../fixtures/example')
 
 context('Files', () => {
-  beforeEach(() => {
+  test.beforeEach(async ({ page }) => {
     await page.goto('https://example.cypress.io/commands/files')
 
     // load example.json fixture file and store
@@ -13,7 +14,7 @@ context('Files', () => {
     cy.fixture('example.json').as('example')
   })
 
-  it('cy.fixture() - load a fixture', () => {
+  test('cy.fixture() - load a fixture', async ({ page }) => {
     // https://on.cypress.io/fixture
 
     // Instead of writing a response inline you can
@@ -25,7 +26,7 @@ context('Files', () => {
 
     // we have code that gets a comment when
     // the button is clicked in scripts.js
-    cy.get('.fixture-btn').click()
+    const fixtureBtn = await page.locator('.fixture-btn').click()
 
     cy.wait('@getComment').its('response.body')
       .should('have.property', 'name')
@@ -44,7 +45,7 @@ context('Files', () => {
       .should('deep.equal', requiredExample)
   })
 
-  it('cy.readFile() - read file contents', () => {
+  test('cy.readFile() - read file contents', async ({ page }) => {
     // https://on.cypress.io/readfile
 
     // You can read a file and yield its contents
@@ -54,7 +55,7 @@ context('Files', () => {
     })
   })
 
-  it('cy.writeFile() - write to a file', () => {
+  test('cy.writeFile() - write to a file', async ({ page }) => {
     // https://on.cypress.io/writefile
 
     // You can write to a file

@@ -1,7 +1,8 @@
+import { test, expect } from '@playwright/test';
 /// <reference types="cypress" />
 
 context('Spies, Stubs, and Clock', () => {
-  it('cy.spy() - wrap a method in a spy', () => {
+  test('cy.spy() - wrap a method in a spy', async ({ page }) => {
     // https://on.cypress.io/spy
     await page.goto('https://example.cypress.io/commands/spies-stubs-clocks')
 
@@ -16,7 +17,7 @@ context('Spies, Stubs, and Clock', () => {
     expect(spy).to.be.called
   })
 
-  it('cy.spy() retries until assertions pass', () => {
+  test('cy.spy() retries until assertions pass', async ({ page }) => {
     await page.goto('https://example.cypress.io/commands/spies-stubs-clocks')
 
     const obj = {
@@ -39,10 +40,10 @@ context('Spies, Stubs, and Clock', () => {
       obj.foo('second')
     }, 2500)
 
-    cy.get('@foo').should('have.been.calledTwice')
+    const foo = await page.locator('@foo').should('have.been.calledTwice')
   })
 
-  it('cy.stub() - create a stub and/or replace a function with stub', () => {
+  test('cy.stub() - create a stub and/or replace a function with stub', async ({ page }) => {
     // https://on.cypress.io/stub
     await page.goto('https://example.cypress.io/commands/spies-stubs-clocks')
 
@@ -64,7 +65,7 @@ context('Spies, Stubs, and Clock', () => {
     expect(stub).to.be.called
   })
 
-  it('cy.clock() - control time in the browser', () => {
+  test('cy.clock() - control time in the browser', async ({ page }) => {
     // https://on.cypress.io/clock
 
     // create the date in UTC so it's always the same
@@ -73,12 +74,12 @@ context('Spies, Stubs, and Clock', () => {
 
     cy.clock(now)
     await page.goto('https://example.cypress.io/commands/spies-stubs-clocks')
-    cy.get('#clock-div').click()
-    cy.get('#clock-div')
+    const clockDiv = await page.locator('#clock-div').click()
+    const clockDiv = await page.locator('#clock-div')
       .should('have.text', '1489449600')
   })
 
-  it('cy.tick() - move time in the browser', () => {
+  test('cy.tick() - move time in the browser', async ({ page }) => {
     // https://on.cypress.io/tick
 
     // create the date in UTC so it's always the same
@@ -87,17 +88,17 @@ context('Spies, Stubs, and Clock', () => {
 
     cy.clock(now)
     await page.goto('https://example.cypress.io/commands/spies-stubs-clocks')
-    cy.get('#tick-div').click()
-    cy.get('#tick-div')
+    const tickDiv = await page.locator('#tick-div').click()
+    const tickDiv = await page.locator('#tick-div')
       .should('have.text', '1489449600')
 
     cy.tick(10000) // 10 seconds passed
-    cy.get('#tick-div').click()
-    cy.get('#tick-div')
+    const tickDiv = await page.locator('#tick-div').click()
+    const tickDiv = await page.locator('#tick-div')
       .should('have.text', '1489449610')
   })
 
-  it('cy.stub() matches depending on arguments', () => {
+  test('cy.stub() matches depending on arguments', async ({ page }) => {
     // see all possible matchers at
     // https://sinonjs.org/releases/latest/matchers/
     const greeter = {
@@ -123,7 +124,7 @@ context('Spies, Stubs, and Clock', () => {
     expect(greeter.greet()).to.equal('Hello, undefined!')
   })
 
-  it('matches call arguments using Sinon matchers', () => {
+  test('matches call arguments using Sinon matchers', async ({ page }) => {
     // see all possible matchers at
     // https://sinonjs.org/releases/latest/matchers/
     const calculator = {
@@ -193,12 +194,12 @@ context('Spies, Stubs, and Clock', () => {
     )
 
     // matchers can be used from BDD assertions
-    cy.get('@add').should('have.been.calledWith',
+    const add = await page.locator('@add').should('have.been.calledWith',
       Cypress.sinon.match.number, Cypress.sinon.match(3))
 
     // you can alias matchers for shorter test code
     const { match: M } = Cypress.sinon
 
-    cy.get('@add').should('have.been.calledWith', M.number, M(3))
+    const add = await page.locator('@add').should('have.been.calledWith', M.number, M(3))
   })
 })

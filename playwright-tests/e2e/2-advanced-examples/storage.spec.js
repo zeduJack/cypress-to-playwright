@@ -1,17 +1,18 @@
+import { test, expect } from '@playwright/test';
 /// <reference types="cypress" />
 
 context('Local Storage / Session Storage', () => {
-  beforeEach(() => {
+  test.beforeEach(async ({ page }) => {
     await page.goto('https://example.cypress.io/commands/storage')
   })
   // Although localStorage is automatically cleared
   // in between tests to maintain a clean state
   // sometimes we need to clear localStorage manually
 
-  it('cy.clearLocalStorage() - clear all data in localStorage for the current origin', () => {
+  test('cy.clearLocalStorage() - clear all data in localStorage for the current origin', async ({ page }) => {
     // https://on.cypress.io/clearlocalstorage
-    cy.get('.ls-btn').click()
-    cy.get('.ls-btn').should(() => {
+    const lsBtn = await page.locator('.ls-btn').click()
+    const lsBtn = await page.locator('.ls-btn').should(() => {
       expect(localStorage.getItem('prop1')).to.eq('red')
       expect(localStorage.getItem('prop2')).to.eq('blue')
       expect(localStorage.getItem('prop3')).to.eq('magenta')
@@ -24,8 +25,8 @@ context('Local Storage / Session Storage', () => {
       expect(localStorage.getItem('prop3')).to.be.null
     })
 
-    cy.get('.ls-btn').click()
-    cy.get('.ls-btn').should(() => {
+    const lsBtn = await page.locator('.ls-btn').click()
+    const lsBtn = await page.locator('.ls-btn').should(() => {
       expect(localStorage.getItem('prop1')).to.eq('red')
       expect(localStorage.getItem('prop2')).to.eq('blue')
       expect(localStorage.getItem('prop3')).to.eq('magenta')
@@ -39,8 +40,8 @@ context('Local Storage / Session Storage', () => {
       expect(localStorage.getItem('prop3')).to.eq('magenta')
     })
 
-    cy.get('.ls-btn').click()
-    cy.get('.ls-btn').should(() => {
+    const lsBtn = await page.locator('.ls-btn').click()
+    const lsBtn = await page.locator('.ls-btn').should(() => {
       expect(localStorage.getItem('prop1')).to.eq('red')
       expect(localStorage.getItem('prop2')).to.eq('blue')
       expect(localStorage.getItem('prop3')).to.eq('magenta')
@@ -55,9 +56,9 @@ context('Local Storage / Session Storage', () => {
     })
   })
 
-  it('cy.getAllLocalStorage() - get all data in localStorage for all origins', () => {
+  test('cy.getAllLocalStorage() - get all data in localStorage for all origins', async ({ page }) => {
     // https://on.cypress.io/getalllocalstorage
-    cy.get('.ls-btn').click()
+    const lsBtn = await page.locator('.ls-btn').click()
 
     // getAllLocalStorage() yields a map of origins to localStorage values
     cy.getAllLocalStorage().should((storageMap) => {
@@ -72,9 +73,9 @@ context('Local Storage / Session Storage', () => {
     })
   })
 
-  it('cy.clearAllLocalStorage() - clear all data in localStorage for all origins', () => {
+  test('cy.clearAllLocalStorage() - clear all data in localStorage for all origins', async ({ page }) => {
     // https://on.cypress.io/clearalllocalstorage
-    cy.get('.ls-btn').click()
+    const lsBtn = await page.locator('.ls-btn').click()
 
     // clearAllLocalStorage() yields null
     cy.clearAllLocalStorage()
@@ -85,9 +86,9 @@ context('Local Storage / Session Storage', () => {
     })
   })
 
-  it('cy.getAllSessionStorage() - get all data in sessionStorage for all origins', () => {
+  test('cy.getAllSessionStorage() - get all data in sessionStorage for all origins', async ({ page }) => {
     // https://on.cypress.io/getallsessionstorage
-    cy.get('.ls-btn').click()
+    const lsBtn = await page.locator('.ls-btn').click()
 
     // getAllSessionStorage() yields a map of origins to sessionStorage values
     cy.getAllSessionStorage().should((storageMap) => {
@@ -102,9 +103,9 @@ context('Local Storage / Session Storage', () => {
     })
   })
 
-  it('cy.clearAllSessionStorage() - clear all data in sessionStorage for all origins', () => {
+  test('cy.clearAllSessionStorage() - clear all data in sessionStorage for all origins', async ({ page }) => {
     // https://on.cypress.io/clearallsessionstorage
-    cy.get('.ls-btn').click()
+    const lsBtn = await page.locator('.ls-btn').click()
 
     // clearAllSessionStorage() yields null
     cy.clearAllSessionStorage()

@@ -1,14 +1,14 @@
+import { test, expect } from '@playwright/test';
 /// <reference types="cypress" />
 
 context('Assertions', () => {
-  beforeEach(() => {
+  test.beforeEach(async ({ page }) => {
     await page.goto('https://example.cypress.io/commands/assertions')
   })
 
-  describe('Implicit Assertions', () => {
-    it('.should() - make an assertion about the current subject', () => {
+  test('.should() - make an assertion about the current subject', async ({ page }) => {
       // https://on.cypress.io/should
-      cy.get('.assertion-table')
+      const assertionTable = await page.locator('.assertion-table')
         .find('tbody tr:last')
         .should('have.class', 'success')
         .find('td')
@@ -28,7 +28,7 @@ context('Assertions', () => {
       // a better way to check element's text content against a regular expression
       // is to use "cy.contains"
       // https://on.cypress.io/contains
-      cy.get('.assertion-table')
+      const assertionTable = await page.locator('.assertion-table')
         .find('tbody tr:last')
         // finds first <td> element with text content matching regular expression
         .contains('td', /column content/i)
@@ -36,11 +36,10 @@ context('Assertions', () => {
 
       // for more information about asserting element's text
       // see https://on.cypress.io/using-cypress-faq#How-do-I-get-an-element’s-text-contents
-    })
 
-    it('.and() - chain multiple assertions together', () => {
+    test('.and() - chain multiple assertions together', async ({ page }) => {
       // https://on.cypress.io/and
-      cy.get('.assertions-link')
+      const assertionsLink = await page.locator('.assertions-link')
         .should('have.class', 'active')
         .and('have.attr', 'href')
         .and('include', 'cypress.io')
@@ -49,7 +48,7 @@ context('Assertions', () => {
 
   describe('Explicit Assertions', () => {
     // https://on.cypress.io/assertions
-    it('expect - make an assertion about a specified subject', () => {
+    test('expect - make an assertion about a specified subject', async ({ page }) => {
       // We can use Chai's BDD style assertions
       expect(true).to.be.true
       const o = { foo: 'bar' }
@@ -60,12 +59,12 @@ context('Assertions', () => {
       expect('FooBar').to.match(/bar$/i)
     })
 
-    it('pass your own callback function to should()', () => {
+    test('pass your own callback function to should()', async ({ page }) => {
       // Pass a function to should that can have any number
       // of explicit assertions within it.
       // The ".should(cb)" function will be retried
       // automatically until it passes all your explicit assertions or times out.
-      cy.get('.assertions-p')
+      const assertionsP = await page.locator('.assertions-p')
         .find('p')
         .should(($p) => {
           // https://on.cypress.io/$
@@ -89,8 +88,8 @@ context('Assertions', () => {
         })
     })
 
-    it('finds element by class name regex', () => {
-      cy.get('.docs-header')
+    test('finds element by class name regex', async ({ page }) => {
+      const docsHeader = await page.locator('.docs-header')
         .find('div')
         // .should(cb) callback function will be retried
         .should(($div) => {
@@ -107,8 +106,8 @@ context('Assertions', () => {
         })
     })
 
-    it('can throw any error', () => {
-      cy.get('.docs-header')
+    test('can throw any error', async ({ page }) => {
+      const docsHeader = await page.locator('.docs-header')
         .find('div')
         .should(($div) => {
           if ($div.length !== 1) {
@@ -124,7 +123,7 @@ context('Assertions', () => {
         })
     })
 
-    it('matches unknown text between two elements', () => {
+    test('matches unknown text between two elements', async ({ page }) => {
       /**
        * Text from the first element.
        * @type {string}
@@ -138,14 +137,14 @@ context('Assertions', () => {
       */
       const normalizeText = (s) => s.replace(/\s/g, '').toLowerCase()
 
-      cy.get('.two-elements')
+      const twoElements = await page.locator('.two-elements')
         .find('.first')
         .then(($first) => {
           // save text from the first element
           text = normalizeText($first.text())
         })
 
-      cy.get('.two-elements')
+      const twoElements = await page.locator('.two-elements')
         .find('.second')
         .should(($div) => {
           // we can massage text before comparing
@@ -155,7 +154,7 @@ context('Assertions', () => {
         })
     })
 
-    it('assert - assert shape of an object', () => {
+    test('assert - assert shape of an object', async ({ page }) => {
       const person = {
         name: 'Joe',
         age: 20,
@@ -164,8 +163,8 @@ context('Assertions', () => {
       assert.isObject(person, 'value is object')
     })
 
-    it('retries the should callback until assertions pass', () => {
-      cy.get('#random-number')
+    test('retries the should callback until assertions pass', async ({ page }) => {
+      const randomNumber = await page.locator('#random-number')
         .should(($div) => {
           const n = parseFloat($div.text())
 

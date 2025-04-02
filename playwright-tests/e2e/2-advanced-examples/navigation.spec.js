@@ -1,13 +1,14 @@
+import { test, expect } from '@playwright/test';
 /// <reference types="cypress" />
 
 context('Navigation', () => {
-  beforeEach(() => {
+  test.beforeEach(async ({ page }) => {
     await page.goto('https://example.cypress.io')
-    cy.get('.navbar-nav').contains('Commands').click()
-    cy.get('.dropdown-menu').contains('Navigation').click()
+    const navbarNav = await page.locator('.navbar-nav').contains('Commands').click()
+    const dropdownMenu = await page.locator('.dropdown-menu').contains('Navigation').click()
   })
 
-  it('cy.go() - go back or forward in the browser\'s history', () => {
+  test('cy.go() - go back or forward in the browser\'s history', async ({ page }) => {
     // https://on.cypress.io/go
 
     cy.location('pathname').should('include', 'navigation')
@@ -27,7 +28,7 @@ context('Navigation', () => {
     cy.location('pathname').should('include', 'navigation')
   })
 
-  it('cy.reload() - reload the page', () => {
+  test('cy.reload() - reload the page', async ({ page }) => {
     // https://on.cypress.io/reload
     cy.reload()
 
@@ -35,7 +36,7 @@ context('Navigation', () => {
     cy.reload(true)
   })
 
-  it('cy.visit() - visit a remote url', () => {
+  test('cy.visit() - visit a remote url', async ({ page }) => {
     // https://on.cypress.io/visit
 
     // Visit any sub-domain of your current domain

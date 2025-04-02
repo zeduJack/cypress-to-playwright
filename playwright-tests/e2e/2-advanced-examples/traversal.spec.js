@@ -1,121 +1,122 @@
+import { test, expect } from '@playwright/test';
 /// <reference types="cypress" />
 
 context('Traversal', () => {
-  beforeEach(() => {
+  test.beforeEach(async ({ page }) => {
     await page.goto('https://example.cypress.io/commands/traversal')
   })
 
-  it('.children() - get child DOM elements', () => {
+  test('.children() - get child DOM elements', async ({ page }) => {
     // https://on.cypress.io/children
-    cy.get('.traversal-breadcrumb')
+    const traversalBreadcrumb = await page.locator('.traversal-breadcrumb')
       .children('.active')
       .should('contain', 'Data')
   })
 
-  it('.closest() - get closest ancestor DOM element', () => {
+  test('.closest() - get closest ancestor DOM element', async ({ page }) => {
     // https://on.cypress.io/closest
-    cy.get('.traversal-badge')
+    const traversalBadge = await page.locator('.traversal-badge')
       .closest('ul')
       .should('have.class', 'list-group')
   })
 
-  it('.eq() - get a DOM element at a specific index', () => {
+  test('.eq() - get a DOM element at a specific index', async ({ page }) => {
     // https://on.cypress.io/eq
-    cy.get('.traversal-list>li')
+    const traversalListLi = await page.locator('.traversal-list>li')
       .eq(1).should('contain', 'siamese')
   })
 
-  it('.filter() - get DOM elements that match the selector', () => {
+  test('.filter() - get DOM elements that match the selector', async ({ page }) => {
     // https://on.cypress.io/filter
-    cy.get('.traversal-nav>li')
+    const traversalNavLi = await page.locator('.traversal-nav>li')
       .filter('.active').should('contain', 'About')
   })
 
-  it('.find() - get descendant DOM elements of the selector', () => {
+  test('.find() - get descendant DOM elements of the selector', async ({ page }) => {
     // https://on.cypress.io/find
-    cy.get('.traversal-pagination')
+    const traversalPagination = await page.locator('.traversal-pagination')
       .find('li').find('a')
       .should('have.length', 7)
   })
 
-  it('.first() - get first DOM element', () => {
+  test('.first() - get first DOM element', async ({ page }) => {
     // https://on.cypress.io/first
-    cy.get('.traversal-table td')
+    const traversalTableTd = await page.locator('.traversal-table td')
       .first().should('contain', '1')
   })
 
-  it('.last() - get last DOM element', () => {
+  test('.last() - get last DOM element', async ({ page }) => {
     // https://on.cypress.io/last
-    cy.get('.traversal-buttons .btn')
+    const traversalButtonsBtn = await page.locator('.traversal-buttons .btn')
       .last().should('contain', 'Submit')
   })
 
-  it('.next() - get next sibling DOM element', () => {
+  test('.next() - get next sibling DOM element', async ({ page }) => {
     // https://on.cypress.io/next
-    cy.get('.traversal-ul')
+    const traversalUl = await page.locator('.traversal-ul')
       .contains('apples').next().should('contain', 'oranges')
   })
 
-  it('.nextAll() - get all next sibling DOM elements', () => {
+  test('.nextAll() - get all next sibling DOM elements', async ({ page }) => {
     // https://on.cypress.io/nextall
-    cy.get('.traversal-next-all')
+    const traversalNextAll = await page.locator('.traversal-next-all')
       .contains('oranges')
       .nextAll().should('have.length', 3)
   })
 
-  it('.nextUntil() - get next sibling DOM elements until next el', () => {
+  test('.nextUntil() - get next sibling DOM elements until next el', async ({ page }) => {
     // https://on.cypress.io/nextuntil
-    cy.get('#veggies')
+    const veggies = await page.locator('#veggies')
       .nextUntil('#nuts').should('have.length', 3)
   })
 
-  it('.not() - remove DOM elements from set of DOM elements', () => {
+  test('.not() - remove DOM elements from set of DOM elements', async ({ page }) => {
     // https://on.cypress.io/not
-    cy.get('.traversal-disabled .btn')
+    const traversalDisabledBtn = await page.locator('.traversal-disabled .btn')
       .not('[disabled]').should('not.contain', 'Disabled')
   })
 
-  it('.parent() - get parent DOM element from DOM elements', () => {
+  test('.parent() - get parent DOM element from DOM elements', async ({ page }) => {
     // https://on.cypress.io/parent
-    cy.get('.traversal-mark')
+    const traversalMark = await page.locator('.traversal-mark')
       .parent().should('contain', 'Morbi leo risus')
   })
 
-  it('.parents() - get parent DOM elements from DOM elements', () => {
+  test('.parents() - get parent DOM elements from DOM elements', async ({ page }) => {
     // https://on.cypress.io/parents
-    cy.get('.traversal-cite')
+    const traversalCite = await page.locator('.traversal-cite')
       .parents().should('match', 'blockquote')
   })
 
-  it('.parentsUntil() - get parent DOM elements from DOM elements until el', () => {
+  test('.parentsUntil() - get parent DOM elements from DOM elements until el', async ({ page }) => {
     // https://on.cypress.io/parentsuntil
-    cy.get('.clothes-nav')
+    const clothesNav = await page.locator('.clothes-nav')
       .find('.active')
       .parentsUntil('.clothes-nav')
       .should('have.length', 2)
   })
 
-  it('.prev() - get previous sibling DOM element', () => {
+  test('.prev() - get previous sibling DOM element', async ({ page }) => {
     // https://on.cypress.io/prev
-    cy.get('.birds').find('.active')
+    const birds = await page.locator('.birds').find('.active')
       .prev().should('contain', 'Lorikeets')
   })
 
-  it('.prevAll() - get all previous sibling DOM elements', () => {
+  test('.prevAll() - get all previous sibling DOM elements', async ({ page }) => {
     // https://on.cypress.io/prevall
-    cy.get('.fruits-list').find('.third')
+    const fruitsList = await page.locator('.fruits-list').find('.third')
       .prevAll().should('have.length', 2)
   })
 
-  it('.prevUntil() - get all previous sibling DOM elements until el', () => {
+  test('.prevUntil() - get all previous sibling DOM elements until el', async ({ page }) => {
     // https://on.cypress.io/prevuntil
-    cy.get('.foods-list').find('#nuts')
+    const foodsList = await page.locator('.foods-list').find('#nuts')
       .prevUntil('#veggies').should('have.length', 3)
   })
 
-  it('.siblings() - get all sibling DOM elements', () => {
+  test('.siblings() - get all sibling DOM elements', async ({ page }) => {
     // https://on.cypress.io/siblings
-    cy.get('.traversal-pills .active')
+    const traversalPillsActive = await page.locator('.traversal-pills .active')
       .siblings().should('have.length', 2)
   })
 })
