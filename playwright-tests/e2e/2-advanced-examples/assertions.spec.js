@@ -6,7 +6,8 @@ context('Assertions', () => {
     await page.goto('https://example.cypress.io/commands/assertions')
   })
 
-  test('.should() - make an assertion about the current subject', async ({ page }) => {
+  describe('Implicit Assertions', () => {
+    test('.should() - make an assertion about the current subject', async ({ page }) => {
       // https://on.cypress.io/should
       const assertionTable = await page.locator('.assertion-table')
         .find('tbody tr:last')
@@ -36,6 +37,7 @@ context('Assertions', () => {
 
       // for more information about asserting element's text
       // see https://on.cypress.io/using-cypress-faq#How-do-I-get-an-element’s-text-contents
+    })
 
     test('.and() - chain multiple assertions together', async ({ page }) => {
       // https://on.cypress.io/and

@@ -12,12 +12,15 @@ import { test, expect } from '@playwright/test';
 // please read our getting started guide:
 // https://on.cypress.io/introduction-to-cypress
 
-test.beforeEach(async ({ page }) => {
+
+  test.beforeEach(async ({ page }) => {
     // Cypress starts out with a blank slate for each test
     // so we must tell it to visit our website with the `cy.visit()` command.
     // Since we want to visit the same URL at the start of all our tests,
     // we include it in our beforeEach function so that it runs before each test
     await page.goto('https://example.cypress.io/todo')
+  })
+
 
   test('displays two todo items by default', async ({ page }) => {
     // We use the `cy.get()` command to get all elements that match the selector.
@@ -32,6 +35,7 @@ test.beforeEach(async ({ page }) => {
     const todoListLi = await page.locator('.todo-list li').first().should('have.text', 'Pay electric bill')
     const todoListLi = await page.locator('.todo-list li').last().should('have.text', 'Walk the dog')
   })
+
 
   test('can add new todo items', async ({ page }) => {
     // We'll store our item text in a variable so we can reuse it
@@ -56,6 +60,7 @@ test.beforeEach(async ({ page }) => {
       .should('have.text', newItem)
   })
 
+
   test('can check off an item as completed', async ({ page }) => {
     // In addition to using the `get` command to get an element by selector,
     // we can also use the `contains` command to get an element by its contents.
@@ -77,6 +82,7 @@ test.beforeEach(async ({ page }) => {
       .parents('li')
       .should('have.class', 'completed')
   })
+
 
   context('with a checked task', () => {
     test.beforeEach(async ({ page }) => {
@@ -139,4 +145,3 @@ test.beforeEach(async ({ page }) => {
       cy.contains('Clear completed').should('not.exist')
     })
   })
-})

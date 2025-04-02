@@ -45,7 +45,8 @@ context('Connectors', () => {
     })
   })
 
-  test('invokes a callback function with the current subject', async ({ page }) => {
+  describe('.then()', () => {
+    test('invokes a callback function with the current subject', async ({ page }) => {
       // https://on.cypress.io/then
       const connectorsListLi = await page.locator('.connectors-list > li')
         .then(($lis) => {
@@ -53,6 +54,7 @@ context('Connectors', () => {
           expect($lis.eq(0), 'first item').to.contain('Walk the dog')
           expect($lis.eq(1), 'second item').to.contain('Feed the cat')
           expect($lis.eq(2), 'third item').to.contain('Write JavaScript')
+        })
     })
 
     test('yields the returned value to the next command', async ({ page }) => {

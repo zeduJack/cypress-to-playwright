@@ -1,7 +1,26 @@
-export default function removeDescribe(content: string): string {
-  const describeRegex = /describe\s*\(\s*(['"`])(.*?)\1\s*,\s*\(\s*\)\s*=>\s*{([\s\S]*?)}\s*\);?/;
+import { Project, SyntaxKind } from 'ts-morph';
 
-  return content.replace(describeRegex, (_, _quote, _title, body) => {
-    return body.trim(); // Unwrap the body of the describe block
+export default function removeDescribe(content: string): string {
+  const project = new Project({ useInMemoryFileSystem: true });
+  const sourceFile = project.createSourceFile('temp.ts', content);
+
+  sourceFile.forEachChild((node) => {
+    if (
+      node.getKind() === SyntaxKind.ExpressionStatement &&
+      node.getFirstChildByKind(SyntaxKind.CallExpression)?.getExpression().getText() === 'describe'
+    ) {
+      const callExpr = node.getFirstChildByKind(SyntaxKind.CallExpression)!;
+      const bodyBlock = callExpr.getArguments()[1]
+        ?.asKind(SyntaxKind.ArrowFunction)
+        ?.getBody()
+        ?.asKind(SyntaxKind.Block);
+
+      if (bodyBlock) {
+        const statements = bodyBlock.getStatements();
+        node.replaceWithText(statements.map(s => s.getFullText()).join('\n'));
+      }
+    }
   });
+
+  return sourceFile.getFullText();
 }
