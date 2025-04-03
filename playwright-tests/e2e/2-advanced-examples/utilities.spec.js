@@ -2,11 +2,11 @@ import { test, expect } from '@playwright/test';
 /// <reference types="cypress" />
 
 context('Utilities', () => {
-  test.beforeEach(async ({ page }) => {
+  test.beforeEach(async (page) => {
     await page.goto('https://example.cypress.io/utilities')
   })
 
-  test('Cypress._ - call a lodash method', async ({ page }) => {
+  test('Cypress._ - call a lodash method', () => {
     // https://on.cypress.io/_
     cy.request('https://jsonplaceholder.cypress.io/users')
       .then((response) => {
@@ -16,7 +16,7 @@ context('Utilities', () => {
       })
   })
 
-  test('Cypress.$ - call a jQuery method', async ({ page }) => {
+  test('Cypress.$ - call a jQuery method', () => {
     // https://on.cypress.io/$
     let $li = Cypress.$('.utility-jquery li:first')
 
@@ -25,7 +25,7 @@ context('Utilities', () => {
     cy.wrap($li).should('have.class', 'active')
   })
 
-  test('Cypress.Blob - blob utilities and base64 string conversion', async ({ page }) => {
+  test('Cypress.Blob - blob utilities and base64 string conversion', () => {
     // https://on.cypress.io/blob
     const utilityBlob = await page.locator('.utility-blob').then(($div) => {
       // https://github.com/nolanlawson/blob-util#imgSrcToDataURL
@@ -46,7 +46,7 @@ context('Utilities', () => {
     })
   })
 
-  test('Cypress.minimatch - test out glob patterns against strings', async ({ page }) => {
+  test('Cypress.minimatch - test out glob patterns against strings', () => {
     // https://on.cypress.io/minimatch
     let matching = Cypress.minimatch('/users/1/comments', '/users/*/comments', {
       matchBase: true,
@@ -76,7 +76,7 @@ context('Utilities', () => {
     expect(matching, 'comments').to.be.false
   })
 
-  test('Cypress.Promise - instantiate a bluebird promise', async ({ page }) => {
+  test('Cypress.Promise - instantiate a bluebird promise', () => {
     // https://on.cypress.io/promise
     let waited = false
 

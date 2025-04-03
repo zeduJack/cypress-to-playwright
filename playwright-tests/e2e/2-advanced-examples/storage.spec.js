@@ -2,14 +2,14 @@ import { test, expect } from '@playwright/test';
 /// <reference types="cypress" />
 
 context('Local Storage / Session Storage', () => {
-  test.beforeEach(async ({ page }) => {
+  test.beforeEach(async (page) => {
     await page.goto('https://example.cypress.io/commands/storage')
   })
   // Although localStorage is automatically cleared
   // in between tests to maintain a clean state
   // sometimes we need to clear localStorage manually
 
-  test('cy.clearLocalStorage() - clear all data in localStorage for the current origin', async ({ page }) => {
+  test('cy.clearLocalStorage() - clear all data in localStorage for the current origin', () => {
     // https://on.cypress.io/clearlocalstorage
     const lsBtn = await page.locator('.ls-btn').click()
     const lsBtn = await page.locator('.ls-btn').should(() => {
@@ -56,7 +56,7 @@ context('Local Storage / Session Storage', () => {
     })
   })
 
-  test('cy.getAllLocalStorage() - get all data in localStorage for all origins', async ({ page }) => {
+  test('cy.getAllLocalStorage() - get all data in localStorage for all origins', () => {
     // https://on.cypress.io/getalllocalstorage
     const lsBtn = await page.locator('.ls-btn').click()
 
@@ -73,7 +73,7 @@ context('Local Storage / Session Storage', () => {
     })
   })
 
-  test('cy.clearAllLocalStorage() - clear all data in localStorage for all origins', async ({ page }) => {
+  test('cy.clearAllLocalStorage() - clear all data in localStorage for all origins', () => {
     // https://on.cypress.io/clearalllocalstorage
     const lsBtn = await page.locator('.ls-btn').click()
 
@@ -86,7 +86,7 @@ context('Local Storage / Session Storage', () => {
     })
   })
 
-  test('cy.getAllSessionStorage() - get all data in sessionStorage for all origins', async ({ page }) => {
+  test('cy.getAllSessionStorage() - get all data in sessionStorage for all origins', () => {
     // https://on.cypress.io/getallsessionstorage
     const lsBtn = await page.locator('.ls-btn').click()
 
@@ -103,7 +103,7 @@ context('Local Storage / Session Storage', () => {
     })
   })
 
-  test('cy.clearAllSessionStorage() - clear all data in sessionStorage for all origins', async ({ page }) => {
+  test('cy.clearAllSessionStorage() - clear all data in sessionStorage for all origins', () => {
     // https://on.cypress.io/clearallsessionstorage
     const lsBtn = await page.locator('.ls-btn').click()
 

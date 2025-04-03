@@ -1,14 +1,14 @@
 import { test, expect } from '@playwright/test';
 /// <reference types="cypress" />
 context('Waiting', () => {
-  test.beforeEach(async ({ page }) => {
+  test.beforeEach(async (page) => {
     await page.goto('https://example.cypress.io/commands/waiting')
   })
   // BE CAREFUL of adding unnecessary wait times.
   // https://on.cypress.io/best-practices#Unnecessary-Waiting
 
   // https://on.cypress.io/wait
-  test('cy.wait() - wait for a specific amount of time', async ({ page }) => {
+  test('cy.wait() - wait for a specific amount of time', () => {
     const waitInput1 = await page.locator('.wait-input1').type('Wait 1000ms after typing')
     cy.wait(1000)
     const waitInput2 = await page.locator('.wait-input2').type('Wait 1000ms after typing')
@@ -17,7 +17,7 @@ context('Waiting', () => {
     cy.wait(1000)
   })
 
-  test('cy.wait() - wait for a specific route', async ({ page }) => {
+  test('cy.wait() - wait for a specific route', () => {
     // Listen to GET to comments/1
     cy.intercept('GET', '**/comments/*').as('getComment')
 

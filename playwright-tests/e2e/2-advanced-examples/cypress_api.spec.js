@@ -4,13 +4,13 @@ import { test, expect } from '@playwright/test';
 context('Cypress APIs', () => {
 
   context('Cypress.Commands', () => {
-    test.beforeEach(async ({ page }) => {
+    test.beforeEach(async (page) => {
       await page.goto('https://example.cypress.io/cypress-api')
     })
 
     // https://on.cypress.io/custom-commands
 
-    test('.add() - create a custom command', async ({ page }) => {
+    test('.add() - create a custom command', () => {
       Cypress.Commands.add('console', {
         prevSubject: true,
       }, (subject, method) => {
@@ -36,12 +36,12 @@ context('Cypress APIs', () => {
   })
 
   context('Cypress.Cookies', () => {
-    test.beforeEach(async ({ page }) => {
+    test.beforeEach(async (page) => {
       await page.goto('https://example.cypress.io/cypress-api')
     })
 
     // https://on.cypress.io/cookies
-    test('.debug() - enable or disable debugging', async ({ page }) => {
+    test('.debug() - enable or disable debugging', () => {
       Cypress.Cookies.debug(true)
 
       // Cypress will now log in the console when
@@ -55,22 +55,22 @@ context('Cypress APIs', () => {
   })
 
   context('Cypress.arch', () => {
-    test.beforeEach(async ({ page }) => {
+    test.beforeEach(async (page) => {
       await page.goto('https://example.cypress.io/cypress-api')
     })
 
-    test('Get CPU architecture name of underlying OS', async ({ page }) => {
+    test('Get CPU architecture name of underlying OS', () => {
     // https://on.cypress.io/arch
       expect(Cypress.arch).to.exist
     })
   })
 
   context('Cypress.config()', () => {
-    test.beforeEach(async ({ page }) => {
+    test.beforeEach(async (page) => {
       await page.goto('https://example.cypress.io/cypress-api')
     })
 
-    test('Get and set configuration options', async ({ page }) => {
+    test('Get and set configuration options', () => {
     // https://on.cypress.io/config
       let myConfig = Cypress.config()
 
@@ -96,12 +96,12 @@ context('Cypress APIs', () => {
   })
 
   context('Cypress.dom', () => {
-    test.beforeEach(async ({ page }) => {
+    test.beforeEach(async (page) => {
       await page.goto('https://example.cypress.io/cypress-api')
     })
 
     // https://on.cypress.io/dom
-    test('.isHidden() - determine if a DOM element is hidden', async ({ page }) => {
+    test('.isHidden() - determine if a DOM element is hidden', () => {
       let hiddenP = Cypress.$('.dom-p p.hidden').get(0)
       let visibleP = Cypress.$('.dom-p p.visible').get(0)
 
@@ -112,14 +112,14 @@ context('Cypress APIs', () => {
   })
 
   context('Cypress.env()', () => {
-    test.beforeEach(async ({ page }) => {
+    test.beforeEach(async (page) => {
       await page.goto('https://example.cypress.io/cypress-api')
     })
 
     // We can set environment variables for highly dynamic values
 
     // https://on.cypress.io/environment-variables
-    test('Get environment variables', async ({ page }) => {
+    test('Get environment variables', () => {
     // https://on.cypress.io/env
     // set multiple environment variables
       Cypress.env({
@@ -141,43 +141,43 @@ context('Cypress APIs', () => {
   })
 
   context('Cypress.log', () => {
-    test.beforeEach(async ({ page }) => {
+    test.beforeEach(async (page) => {
       await page.goto('https://example.cypress.io/cypress-api')
     })
 
-    test('Control what is printed to the Command Log', async ({ page }) => {
+    test('Control what is printed to the Command Log', () => {
     // https://on.cypress.io/cypress-log
     })
   })
 
   context('Cypress.platform', () => {
-    test.beforeEach(async ({ page }) => {
+    test.beforeEach(async (page) => {
       await page.goto('https://example.cypress.io/cypress-api')
     })
 
-    test('Get underlying OS name', async ({ page }) => {
+    test('Get underlying OS name', () => {
     // https://on.cypress.io/platform
       expect(Cypress.platform).to.be.exist
     })
   })
 
   context('Cypress.version', () => {
-    test.beforeEach(async ({ page }) => {
+    test.beforeEach(async (page) => {
       await page.goto('https://example.cypress.io/cypress-api')
     })
 
-    test('Get current version of Cypress being run', async ({ page }) => {
+    test('Get current version of Cypress being run', () => {
     // https://on.cypress.io/version
       expect(Cypress.version).to.be.exist
     })
   })
 
   context('Cypress.spec', () => {
-    test.beforeEach(async ({ page }) => {
+    test.beforeEach(async (page) => {
       await page.goto('https://example.cypress.io/cypress-api')
     })
 
-    test('Get current spec information', async ({ page }) => {
+    test('Get current spec information', () => {
     // https://on.cypress.io/spec
     // wrap the object so we can inspect it easily by clicking in the command log
       cy.wrap(Cypress.spec).should('include.keys', ['name', 'relative', 'absolute'])

@@ -2,13 +2,13 @@ import { test, expect } from '@playwright/test';
 /// <reference types="cypress" />
 
 context('Navigation', () => {
-  test.beforeEach(async ({ page }) => {
+  test.beforeEach(async (page) => {
     await page.goto('https://example.cypress.io')
     const navbarNav = await page.locator('.navbar-nav').contains('Commands').click()
     const dropdownMenu = await page.locator('.dropdown-menu').contains('Navigation').click()
   })
 
-  test('cy.go() - go back or forward in the browser\'s history', async ({ page }) => {
+  test('cy.go() - go back or forward in the browser\'s history', () => {
     // https://on.cypress.io/go
 
     cy.location('pathname').should('include', 'navigation')
@@ -28,7 +28,7 @@ context('Navigation', () => {
     cy.location('pathname').should('include', 'navigation')
   })
 
-  test('cy.reload() - reload the page', async ({ page }) => {
+  test('cy.reload() - reload the page', () => {
     // https://on.cypress.io/reload
     cy.reload()
 
@@ -36,21 +36,21 @@ context('Navigation', () => {
     cy.reload(true)
   })
 
-  test('cy.visit() - visit a remote url', async ({ page }) => {
+  test('cy.visit() - visit a remote url', () => {
     // https://on.cypress.io/visit
 
     // Visit any sub-domain of your current domain
     // Pass options to the visit
-    cy.visit('https://example.cypress.io/commands/navigation', {
-      timeout: 50000, // increase total time for the visit to resolve
-      onBeforeLoad (contentWindow) {
-        // contentWindow is the remote page's window object
-        expect(typeof contentWindow === 'object').to.be.true
-      },
-      onLoad (contentWindow) {
-        // contentWindow is the remote page's window object
-        expect(typeof contentWindow === 'object').to.be.true
-      },
-    })
+    await page.goto('https://example.cypress.io/commands/navigation', {
+            timeout: 50000, // increase total time for the visit to resolve
+            onBeforeLoad (contentWindow) {
+              // contentWindow is the remote page's window object
+              expect(typeof contentWindow === 'object').to.be.true
+            },
+            onLoad (contentWindow) {
+              // contentWindow is the remote page's window object
+              expect(typeof contentWindow === 'object').to.be.true
+            },
+          })
   })
 })

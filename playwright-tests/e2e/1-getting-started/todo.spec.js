@@ -13,7 +13,7 @@ import { test, expect } from '@playwright/test';
 // https://on.cypress.io/introduction-to-cypress
 
 
-  test.beforeEach(async ({ page }) => {
+  test.beforeEach(async (page) => {
     // Cypress starts out with a blank slate for each test
     // so we must tell it to visit our website with the `cy.visit()` command.
     // Since we want to visit the same URL at the start of all our tests,
@@ -22,7 +22,7 @@ import { test, expect } from '@playwright/test';
   })
 
 
-  test('displays two todo items by default', async ({ page }) => {
+  test('displays two todo items by default', () => {
     // We use the `cy.get()` command to get all elements that match the selector.
     // Then, we use `should` to assert that there are two matched items,
     // which are the two default items.
@@ -37,7 +37,7 @@ import { test, expect } from '@playwright/test';
   })
 
 
-  test('can add new todo items', async ({ page }) => {
+  test('can add new todo items', () => {
     // We'll store our item text in a variable so we can reuse it
     const newItem = 'Feed the cat'
 
@@ -61,7 +61,7 @@ import { test, expect } from '@playwright/test';
   })
 
 
-  test('can check off an item as completed', async ({ page }) => {
+  test('can check off an item as completed', () => {
     // In addition to using the `get` command to get an element by selector,
     // we can also use the `contains` command to get an element by its contents.
     // However, this will yield the <label>, which is lowest-level element that contains the text.
@@ -85,7 +85,7 @@ import { test, expect } from '@playwright/test';
 
 
   context('with a checked task', () => {
-    test.beforeEach(async ({ page }) => {
+    test.beforeEach(async (page) => {
       // We'll take the command we used above to check off an element
       // Since we want to perform multiple tests that start with checking
       // one element, we put it in the beforeEach hook
@@ -96,7 +96,7 @@ import { test, expect } from '@playwright/test';
         .check()
     })
 
-    test('can filter for uncompleted tasks', async ({ page }) => {
+    test('can filter for uncompleted tasks', () => {
       // We'll click on the "active" button in order to
       // display only incomplete items
       cy.contains('Active').click()
@@ -113,7 +113,7 @@ import { test, expect } from '@playwright/test';
       cy.contains('Pay electric bill').should('not.exist')
     })
 
-    test('can filter for completed tasks', async ({ page }) => {
+    test('can filter for completed tasks', () => {
       // We can perform similar steps as the test above to ensure
       // that only completed tasks are shown
       cy.contains('Completed').click()
@@ -126,7 +126,7 @@ import { test, expect } from '@playwright/test';
       cy.contains('Walk the dog').should('not.exist')
     })
 
-    test('can delete all completed tasks', async ({ page }) => {
+    test('can delete all completed tasks', () => {
       // First, let's click the "Clear completed" button
       // `contains` is actually serving two purposes here.
       // First, it's ensuring that the button exists within the dom.

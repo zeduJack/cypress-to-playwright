@@ -2,13 +2,13 @@ import { test, expect } from '@playwright/test';
 /// <reference types="cypress" />
 
 context('Actions', () => {
-  test.beforeEach(async ({ page }) => {
+  test.beforeEach(async (page) => {
     await page.goto('https://example.cypress.io/commands/actions')
   })
 
   // https://on.cypress.io/interacting-with-elements
 
-  test('.type() - type into a DOM element', async ({ page }) => {
+  test('.type() - type into a DOM element', () => {
     // https://on.cypress.io/type
     const actionEmail = await page.locator('.action-email').type('fake@email.com')
     const actionEmail = await page.locator('.action-email').should('have.value', 'fake@email.com')
@@ -34,14 +34,14 @@ context('Actions', () => {
     const actionDisabled = await page.locator('.action-disabled').should('have.value', 'disabled error checking')
   })
 
-  test('.focus() - focus on a DOM element', async ({ page }) => {
+  test('.focus() - focus on a DOM element', () => {
     // https://on.cypress.io/focus
     const actionFocus = await page.locator('.action-focus').focus()
     const actionFocus = await page.locator('.action-focus').should('have.class', 'focus')
       .prev().should('have.attr', 'style', 'color: orange;')
   })
 
-  test('.blur() - blur off a DOM element', async ({ page }) => {
+  test('.blur() - blur off a DOM element', () => {
     // https://on.cypress.io/blur
     const actionBlur = await page.locator('.action-blur').type('About to blur')
     const actionBlur = await page.locator('.action-blur').blur()
@@ -49,7 +49,7 @@ context('Actions', () => {
       .prev().should('have.attr', 'style', 'color: red;')
   })
 
-  test('.clear() - clears an input or textarea element', async ({ page }) => {
+  test('.clear() - clears an input or textarea element', () => {
     // https://on.cypress.io/clear
     const actionClear = await page.locator('.action-clear').type('Clear this text')
     const actionClear = await page.locator('.action-clear').should('have.value', 'Clear this text')
@@ -57,7 +57,7 @@ context('Actions', () => {
     const actionClear = await page.locator('.action-clear').should('have.value', '')
   })
 
-  test('.submit() - submit a form', async ({ page }) => {
+  test('.submit() - submit a form', () => {
     // https://on.cypress.io/submit
     const actionForm = await page.locator('.action-form')
       .find('[type="text"]').type('HALFOFF')
@@ -66,7 +66,7 @@ context('Actions', () => {
     const actionForm = await page.locator('.action-form').next().should('contain', 'Your form has been submitted!')
   })
 
-  test('.click() - click on a DOM element', async ({ page }) => {
+  test('.click() - click on a DOM element', () => {
     // https://on.cypress.io/click
     const actionBtn = await page.locator('.action-btn').click()
 
@@ -114,7 +114,7 @@ context('Actions', () => {
     const actionOpacityBtn = await page.locator('.action-opacity>.btn').click({ force: true })
   })
 
-  test('.dblclick() - double click on a DOM element', async ({ page }) => {
+  test('.dblclick() - double click on a DOM element', () => {
     // https://on.cypress.io/dblclick
 
     // Our app has a listener on 'dblclick' event in our 'scripts.js'
@@ -124,7 +124,7 @@ context('Actions', () => {
     const actionInputHidden = await page.locator('.action-input-hidden').should('be.visible')
   })
 
-  test('.rightclick() - right click on a DOM element', async ({ page }) => {
+  test('.rightclick() - right click on a DOM element', () => {
     // https://on.cypress.io/rightclick
 
     // Our app has a listener on 'contextmenu' event in our 'scripts.js'
@@ -134,7 +134,7 @@ context('Actions', () => {
     const rightclickActionInputHidden = await page.locator('.rightclick-action-input-hidden').should('be.visible')
   })
 
-  test('.check() - check a checkbox or radio element', async ({ page }) => {
+  test('.check() - check a checkbox or radio element', () => {
     // https://on.cypress.io/check
 
     // By default, .check() will check all
@@ -161,7 +161,7 @@ context('Actions', () => {
     const actionRadiosTypeRadio = await page.locator('.action-radios [type="radio"]').should('be.checked')
   })
 
-  test('.uncheck() - uncheck a checkbox element', async ({ page }) => {
+  test('.uncheck() - uncheck a checkbox element', () => {
     // https://on.cypress.io/uncheck
 
     // By default, .uncheck() will uncheck all matching
@@ -196,7 +196,7 @@ context('Actions', () => {
     const actionCheckDisabled = await page.locator('.action-check [disabled]').should('not.be.checked')
   })
 
-  test('.select() - select an option in a <select> element', async ({ page }) => {
+  test('.select() - select an option in a <select> element', () => {
     // https://on.cypress.io/select
 
     // at first, no option should be selected
@@ -233,7 +233,7 @@ context('Actions', () => {
       .invoke('val').should('include', 'fr-oranges')
   })
 
-  test('.scrollIntoView() - scroll an element into view', async ({ page }) => {
+  test('.scrollIntoView() - scroll an element into view', () => {
     // https://on.cypress.io/scrollintoview
 
     // normally all of these buttons are hidden,
@@ -265,7 +265,7 @@ context('Actions', () => {
       .should('be.visible')
   })
 
-  test('.trigger() - trigger an event on a DOM element', async ({ page }) => {
+  test('.trigger() - trigger an event on a DOM element', () => {
     // https://on.cypress.io/trigger
 
     // To interact with a range input (slider)
@@ -283,7 +283,7 @@ context('Actions', () => {
       .should('have.text', '25')
   })
 
-  test('cy.scrollTo() - scroll the window or element to a position', async ({ page }) => {
+  test('cy.scrollTo() - scroll the window or element to a position', () => {
     // https://on.cypress.io/scrollto
 
     // You can scroll to 9 specific positions of an element:

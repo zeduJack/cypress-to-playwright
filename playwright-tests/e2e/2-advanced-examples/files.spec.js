@@ -6,7 +6,7 @@ import { test, expect } from '@playwright/test';
 const requiredExample = require('../../fixtures/example')
 
 context('Files', () => {
-  test.beforeEach(async ({ page }) => {
+  test.beforeEach(async (page) => {
     await page.goto('https://example.cypress.io/commands/files')
 
     // load example.json fixture file and store
@@ -14,7 +14,7 @@ context('Files', () => {
     cy.fixture('example.json').as('example')
   })
 
-  test('cy.fixture() - load a fixture', async ({ page }) => {
+  test('cy.fixture() - load a fixture', () => {
     // https://on.cypress.io/fixture
 
     // Instead of writing a response inline you can
@@ -33,7 +33,7 @@ context('Files', () => {
       .and('include', 'Using fixtures to represent data')
   })
 
-  it('cy.fixture() or require - load a fixture', function () {
+  test('cy.fixture() or require - load a fixture', function () {
     // we are inside the "function () { ... }"
     // callback and can use test context object "this"
     // "this.example" was loaded in "beforeEach" function callback
@@ -45,7 +45,7 @@ context('Files', () => {
       .should('deep.equal', requiredExample)
   })
 
-  test('cy.readFile() - read file contents', async ({ page }) => {
+  test('cy.readFile() - read file contents', () => {
     // https://on.cypress.io/readfile
 
     // You can read a file and yield its contents
@@ -55,7 +55,7 @@ context('Files', () => {
     })
   })
 
-  test('cy.writeFile() - write to a file', async ({ page }) => {
+  test('cy.writeFile() - write to a file', () => {
     // https://on.cypress.io/writefile
 
     // You can write to a file

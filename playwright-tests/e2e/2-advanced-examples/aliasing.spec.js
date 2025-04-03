@@ -2,11 +2,11 @@ import { test, expect } from '@playwright/test';
 /// <reference types="cypress" />
 
 context('Aliasing', () => {
-  test.beforeEach(async ({ page }) => {
+  test.beforeEach(async (page) => {
     await page.goto('https://example.cypress.io/commands/aliasing')
   })
 
-  test('.as() - alias a DOM element for later use', async ({ page }) => {
+  test('.as() - alias a DOM element for later use', () => {
     // https://on.cypress.io/as
 
     // Alias a DOM element for use later
@@ -26,7 +26,7 @@ context('Aliasing', () => {
       .and('contain', 'Changed')
   })
 
-  test('.as() - alias a route for later use', async ({ page }) => {
+  test('.as() - alias a route for later use', () => {
     // Alias the route to wait for its response
     cy.intercept('GET', '**/comments/*').as('getComment')
 

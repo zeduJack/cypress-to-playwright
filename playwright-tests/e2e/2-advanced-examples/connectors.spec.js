@@ -2,11 +2,11 @@ import { test, expect } from '@playwright/test';
 /// <reference types="cypress" />
 
 context('Connectors', () => {
-  test.beforeEach(async ({ page }) => {
+  test.beforeEach(async (page) => {
     await page.goto('https://example.cypress.io/commands/connectors')
   })
 
-  test('.each() - iterate over an array of elements', async ({ page }) => {
+  test('.each() - iterate over an array of elements', () => {
     // https://on.cypress.io/each
     const connectorsEachUlLi = await page.locator('.connectors-each-ul>li')
       .each(($el, index, $list) => {
@@ -14,7 +14,7 @@ context('Connectors', () => {
       })
   })
 
-  test('.its() - get properties on the current subject', async ({ page }) => {
+  test('.its() - get properties on the current subject', () => {
     // https://on.cypress.io/its
     const connectorsItsUlLi = await page.locator('.connectors-its-ul>li')
       // calls the 'length' property yielding that value
@@ -22,7 +22,7 @@ context('Connectors', () => {
       .should('be.gt', 2)
   })
 
-  test('.invoke() - invoke a function on the current subject', async ({ page }) => {
+  test('.invoke() - invoke a function on the current subject', () => {
     // our div is hidden in our script.js
     // $('.connectors-div').hide()
     const connectorsDiv = await page.locator('.connectors-div').should('be.hidden')
@@ -34,7 +34,7 @@ context('Connectors', () => {
     const connectorsDiv = await page.locator('.connectors-div').should('be.visible')
   })
 
-  test('.spread() - spread an array as individual args to callback function', async ({ page }) => {
+  test('.spread() - spread an array as individual args to callback function', () => {
     // https://on.cypress.io/spread
     const arr = ['foo', 'bar', 'baz']
 
@@ -46,7 +46,7 @@ context('Connectors', () => {
   })
 
   describe('.then()', () => {
-    test('invokes a callback function with the current subject', async ({ page }) => {
+    test('invokes a callback function with the current subject', () => {
       // https://on.cypress.io/then
       const connectorsListLi = await page.locator('.connectors-list > li')
         .then(($lis) => {
@@ -57,7 +57,7 @@ context('Connectors', () => {
         })
     })
 
-    test('yields the returned value to the next command', async ({ page }) => {
+    test('yields the returned value to the next command', () => {
       cy.wrap(1)
         .then((num) => {
           expect(num).to.equal(1)
@@ -69,7 +69,7 @@ context('Connectors', () => {
         })
     })
 
-    test('yields the original subject without return', async ({ page }) => {
+    test('yields the original subject without return', () => {
       cy.wrap(1)
         .then((num) => {
           expect(num).to.equal(1)
@@ -81,7 +81,7 @@ context('Connectors', () => {
         })
     })
 
-    test('yields the value yielded by the last Cypress command inside', async ({ page }) => {
+    test('yields the value yielded by the last Cypress command inside', () => {
       cy.wrap(1)
         .then((num) => {
           expect(num).to.equal(1)

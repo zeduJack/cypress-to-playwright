@@ -2,16 +2,16 @@ import { test, expect } from '@playwright/test';
 /// <reference types="cypress" />
 
 context('Location', () => {
-  test.beforeEach(async ({ page }) => {
+  test.beforeEach(async (page) => {
     await page.goto('https://example.cypress.io/commands/location')
   })
 
-  test('cy.hash() - get the current URL hash', async ({ page }) => {
+  test('cy.hash() - get the current URL hash', () => {
     // https://on.cypress.io/hash
     cy.hash().should('be.empty')
   })
 
-  test('cy.location() - get window.location', async ({ page }) => {
+  test('cy.location() - get window.location', () => {
     // https://on.cypress.io/location
     cy.location().should((location) => {
       expect(location.hash).to.be.empty
@@ -26,7 +26,7 @@ context('Location', () => {
     })
   })
 
-  test('cy.url() - get the current URL', async ({ page }) => {
+  test('cy.url() - get the current URL', () => {
     // https://on.cypress.io/url
     cy.url().should('eq', 'https://example.cypress.io/commands/location')
   })

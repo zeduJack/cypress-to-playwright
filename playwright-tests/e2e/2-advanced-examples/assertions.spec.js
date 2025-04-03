@@ -2,12 +2,12 @@ import { test, expect } from '@playwright/test';
 /// <reference types="cypress" />
 
 context('Assertions', () => {
-  test.beforeEach(async ({ page }) => {
+  test.beforeEach(async (page) => {
     await page.goto('https://example.cypress.io/commands/assertions')
   })
 
   describe('Implicit Assertions', () => {
-    test('.should() - make an assertion about the current subject', async ({ page }) => {
+    test('.should() - make an assertion about the current subject', () => {
       // https://on.cypress.io/should
       const assertionTable = await page.locator('.assertion-table')
         .find('tbody tr:last')
@@ -39,7 +39,7 @@ context('Assertions', () => {
       // see https://on.cypress.io/using-cypress-faq#How-do-I-get-an-element’s-text-contents
     })
 
-    test('.and() - chain multiple assertions together', async ({ page }) => {
+    test('.and() - chain multiple assertions together', () => {
       // https://on.cypress.io/and
       const assertionsLink = await page.locator('.assertions-link')
         .should('have.class', 'active')
@@ -50,7 +50,7 @@ context('Assertions', () => {
 
   describe('Explicit Assertions', () => {
     // https://on.cypress.io/assertions
-    test('expect - make an assertion about a specified subject', async ({ page }) => {
+    test('expect - make an assertion about a specified subject', () => {
       // We can use Chai's BDD style assertions
       expect(true).to.be.true
       const o = { foo: 'bar' }
@@ -61,7 +61,7 @@ context('Assertions', () => {
       expect('FooBar').to.match(/bar$/i)
     })
 
-    test('pass your own callback function to should()', async ({ page }) => {
+    test('pass your own callback function to should()', () => {
       // Pass a function to should that can have any number
       // of explicit assertions within it.
       // The ".should(cb)" function will be retried
@@ -90,7 +90,7 @@ context('Assertions', () => {
         })
     })
 
-    test('finds element by class name regex', async ({ page }) => {
+    test('finds element by class name regex', () => {
       const docsHeader = await page.locator('.docs-header')
         .find('div')
         // .should(cb) callback function will be retried
@@ -108,7 +108,7 @@ context('Assertions', () => {
         })
     })
 
-    test('can throw any error', async ({ page }) => {
+    test('can throw any error', () => {
       const docsHeader = await page.locator('.docs-header')
         .find('div')
         .should(($div) => {
@@ -125,7 +125,7 @@ context('Assertions', () => {
         })
     })
 
-    test('matches unknown text between two elements', async ({ page }) => {
+    test('matches unknown text between two elements', () => {
       /**
        * Text from the first element.
        * @type {string}
@@ -156,7 +156,7 @@ context('Assertions', () => {
         })
     })
 
-    test('assert - assert shape of an object', async ({ page }) => {
+    test('assert - assert shape of an object', () => {
       const person = {
         name: 'Joe',
         age: 20,
@@ -165,7 +165,7 @@ context('Assertions', () => {
       assert.isObject(person, 'value is object')
     })
 
-    test('retries the should callback until assertions pass', async ({ page }) => {
+    test('retries the should callback until assertions pass', () => {
       const randomNumber = await page.locator('#random-number')
         .should(($div) => {
           const n = parseFloat($div.text())

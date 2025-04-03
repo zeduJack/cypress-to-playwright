@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 /// <reference types="cypress" />
 
 context('Spies, Stubs, and Clock', () => {
-  test('cy.spy() - wrap a method in a spy', async ({ page }) => {
+  test('cy.spy() - wrap a method in a spy', () => {
     // https://on.cypress.io/spy
     await page.goto('https://example.cypress.io/commands/spies-stubs-clocks')
 
@@ -17,7 +17,7 @@ context('Spies, Stubs, and Clock', () => {
     expect(spy).to.be.called
   })
 
-  test('cy.spy() retries until assertions pass', async ({ page }) => {
+  test('cy.spy() retries until assertions pass', () => {
     await page.goto('https://example.cypress.io/commands/spies-stubs-clocks')
 
     const obj = {
@@ -43,7 +43,7 @@ context('Spies, Stubs, and Clock', () => {
     const foo = await page.locator('@foo').should('have.been.calledTwice')
   })
 
-  test('cy.stub() - create a stub and/or replace a function with stub', async ({ page }) => {
+  test('cy.stub() - create a stub and/or replace a function with stub', () => {
     // https://on.cypress.io/stub
     await page.goto('https://example.cypress.io/commands/spies-stubs-clocks')
 
@@ -65,7 +65,7 @@ context('Spies, Stubs, and Clock', () => {
     expect(stub).to.be.called
   })
 
-  test('cy.clock() - control time in the browser', async ({ page }) => {
+  test('cy.clock() - control time in the browser', () => {
     // https://on.cypress.io/clock
 
     // create the date in UTC so it's always the same
@@ -79,7 +79,7 @@ context('Spies, Stubs, and Clock', () => {
       .should('have.text', '1489449600')
   })
 
-  test('cy.tick() - move time in the browser', async ({ page }) => {
+  test('cy.tick() - move time in the browser', () => {
     // https://on.cypress.io/tick
 
     // create the date in UTC so it's always the same
@@ -98,7 +98,7 @@ context('Spies, Stubs, and Clock', () => {
       .should('have.text', '1489449610')
   })
 
-  test('cy.stub() matches depending on arguments', async ({ page }) => {
+  test('cy.stub() matches depending on arguments', () => {
     // see all possible matchers at
     // https://sinonjs.org/releases/latest/matchers/
     const greeter = {
@@ -124,7 +124,7 @@ context('Spies, Stubs, and Clock', () => {
     expect(greeter.greet()).to.equal('Hello, undefined!')
   })
 
-  test('matches call arguments using Sinon matchers', async ({ page }) => {
+  test('matches call arguments using Sinon matchers', () => {
     // see all possible matchers at
     // https://sinonjs.org/releases/latest/matchers/
     const calculator = {

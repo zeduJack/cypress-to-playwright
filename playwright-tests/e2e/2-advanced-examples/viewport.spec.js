@@ -1,11 +1,11 @@
 import { test, expect } from '@playwright/test';
 /// <reference types="cypress" />
 context('Viewport', () => {
-  test.beforeEach(async ({ page }) => {
+  test.beforeEach(async (page) => {
     await page.goto('https://example.cypress.io/commands/viewport')
   })
 
-  test('cy.viewport() - set the viewport size and dimension', async ({ page }) => {
+  test('cy.viewport() - set the viewport size and dimension', () => {
     // https://on.cypress.io/viewport
 
     const navbar = await page.locator('#navbar').should('be.visible')

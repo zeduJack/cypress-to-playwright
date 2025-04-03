@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 /// <reference types="cypress" />
 
 context('Cookies', () => {
-  test.beforeEach(async ({ page }) => {
+  test.beforeEach(async (page) => {
     Cypress.Cookies.debug(true)
 
     await page.goto('https://example.cypress.io/commands/cookies')
@@ -12,7 +12,7 @@ context('Cookies', () => {
     cy.clearCookies()
   })
 
-  test('cy.getCookie() - get a browser cookie', async ({ page }) => {
+  test('cy.getCookie() - get a browser cookie', () => {
     // https://on.cypress.io/getcookie
     const getcookieSetACookie = await page.locator('#getCookie .set-a-cookie').click()
 
@@ -20,7 +20,7 @@ context('Cookies', () => {
     cy.getCookie('token').should('have.property', 'value', '123ABC')
   })
 
-  test('cy.getCookies() - get browser cookies for the current domain', async ({ page }) => {
+  test('cy.getCookies() - get browser cookies for the current domain', () => {
     // https://on.cypress.io/getcookies
     cy.getCookies().should('be.empty')
 
@@ -38,7 +38,7 @@ context('Cookies', () => {
     })
   })
 
-  test('cy.getAllCookies() - get all browser cookies', async ({ page }) => {
+  test('cy.getAllCookies() - get all browser cookies', () => {
     // https://on.cypress.io/getallcookies
     cy.getAllCookies().should('be.empty')
 
@@ -64,7 +64,7 @@ context('Cookies', () => {
     })
   })
 
-  test('cy.setCookie() - set a browser cookie', async ({ page }) => {
+  test('cy.setCookie() - set a browser cookie', () => {
     // https://on.cypress.io/setcookie
     cy.getCookies().should('be.empty')
 
@@ -74,7 +74,7 @@ context('Cookies', () => {
     cy.getCookie('foo').should('have.property', 'value', 'bar')
   })
 
-  test('cy.clearCookie() - clear a browser cookie', async ({ page }) => {
+  test('cy.clearCookie() - clear a browser cookie', () => {
     // https://on.cypress.io/clearcookie
     cy.getCookie('token').should('be.null')
 
@@ -88,7 +88,7 @@ context('Cookies', () => {
     cy.getCookie('token').should('be.null')
   })
 
-  test('cy.clearCookies() - clear browser cookies for the current domain', async ({ page }) => {
+  test('cy.clearCookies() - clear browser cookies for the current domain', () => {
     // https://on.cypress.io/clearcookies
     cy.getCookies().should('be.empty')
 
@@ -102,7 +102,7 @@ context('Cookies', () => {
     cy.getCookies().should('be.empty')
   })
 
-  test('cy.clearAllCookies() - clear all browser cookies', async ({ page }) => {
+  test('cy.clearAllCookies() - clear all browser cookies', () => {
     // https://on.cypress.io/clearallcookies
     cy.getAllCookies().should('be.empty')
 

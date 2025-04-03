@@ -1,17 +1,15 @@
-export default function ensurePlaywrightImport(content: string): string {
-  const importLine = `import { test, expect } from '@playwright/test';`;
+import { Project, SyntaxKind } from 'ts-morph';
 
-  // If the import is already present, do nothing
-  if (content.includes(importLine)) {
+export default function ensurePlaywrightImport(content: string): string {
+  if (content.includes(`import { test, expect } from '@playwright/test';`)) {
     return content;
   }
 
-  // Insert after any existing import statements
-  const lines = content.split('\n');
-  const importIndex = lines.findIndex(line => !line.trim().startsWith('import'));
+  const project = new Project({ useInMemoryFileSystem: true });
+  const sourceFile = project.createSourceFile('temp.ts', content);
 
-  // Insert at the right place
-  lines.splice(importIndex === -1 ? 0 : importIndex, 0, importLine);
+  const importIndex = 0;
+  sourceFile.insertStatements(importIndex, `import { test, expect } from '@playwright/test';\n`);
 
-  return lines.join('\n');
+  return sourceFile.getFullText();
 }

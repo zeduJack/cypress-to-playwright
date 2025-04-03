@@ -2,11 +2,11 @@ import { test, expect } from '@playwright/test';
 /// <reference types="cypress" />
 
 context('Misc', () => {
-  test.beforeEach(async ({ page }) => {
+  test.beforeEach(async (page) => {
     await page.goto('https://example.cypress.io/commands/misc')
   })
 
-  test('cy.exec() - execute a system command', async ({ page }) => {
+  test('cy.exec() - execute a system command', () => {
     // execute a system command.
     // so you can take actions necessary for
     // your test outside the scope of Cypress.
@@ -53,7 +53,7 @@ context('Misc', () => {
     }
   })
 
-  test('cy.focused() - get the DOM element that has focus', async ({ page }) => {
+  test('cy.focused() - get the DOM element that has focus', () => {
     // https://on.cypress.io/focused
     const miscForm = await page.locator('.misc-form').find('#name').click()
     cy.focused().should('have.id', 'name')
@@ -63,12 +63,12 @@ context('Misc', () => {
   })
 
   context('Cypress.Screenshot', function () {
-    test('cy.screenshot() - take a screenshot', async ({ page }) => {
+    test('cy.screenshot() - take a screenshot', () => {
       // https://on.cypress.io/screenshot
       cy.screenshot('my-image')
     })
 
-    it('Cypress.Screenshot.defaults() - change default config of screenshots', function () {
+    test('Cypress.Screenshot.defaults() - change default config of screenshots', function () {
       Cypress.Screenshot.defaults({
         blackout: ['.foo'],
         capture: 'viewport',
@@ -82,7 +82,7 @@ context('Misc', () => {
     })
   })
 
-  test('cy.wrap() - wrap an object', async ({ page }) => {
+  test('cy.wrap() - wrap an object', () => {
     // https://on.cypress.io/wrap
     cy.wrap({ foo: 'bar' })
       .should('have.property', 'foo')

@@ -2,14 +2,14 @@ import { test, expect } from '@playwright/test';
 /// <reference types="cypress" />
 
 context('Querying', () => {
-  test.beforeEach(async ({ page }) => {
+  test.beforeEach(async (page) => {
     await page.goto('https://example.cypress.io/commands/querying')
   })
 
   // The most commonly used query is 'cy.get()', you can
   // think of this like the '$' in jQuery
 
-  test('cy.get() - query DOM elements', async ({ page }) => {
+  test('cy.get() - query DOM elements', () => {
     // https://on.cypress.io/get
 
     const queryBtn = await page.locator('#query-btn').should('contain', 'Button')
@@ -40,7 +40,7 @@ context('Querying', () => {
       .and('have.css', 'position', 'static')
   })
 
-  test('cy.contains() - query DOM elements with matching content', async ({ page }) => {
+  test('cy.contains() - query DOM elements with matching content', () => {
     // https://on.cypress.io/contains
     const queryList = await page.locator('.query-list')
       .contains('bananas')
@@ -66,7 +66,7 @@ context('Querying', () => {
       .should('have.class', 'btn')
   })
 
-  test('.within() - query DOM elements within a specific element', async ({ page }) => {
+  test('.within() - query DOM elements within a specific element', () => {
     // https://on.cypress.io/within
     const queryForm = await page.locator('.query-form').within(() => {
       const inputFirst = await page.locator('input:first').should('have.attr', 'placeholder', 'Email')
@@ -74,7 +74,7 @@ context('Querying', () => {
     })
   })
 
-  test('cy.root() - query the root DOM element', async ({ page }) => {
+  test('cy.root() - query the root DOM element', () => {
     // https://on.cypress.io/root
 
     // By default, root is the document
@@ -86,7 +86,7 @@ context('Querying', () => {
     })
   })
 
-  test('best practices - selecting elements', async ({ page }) => {
+  test('best practices - selecting elements', () => {
     // https://on.cypress.io/best-practices#Selecting-Elements
     const dataCyBestPracticesSelectingElements = await page.locator('[data-cy=best-practices-selecting-elements]').within(() => {
       // Worst - too generic, no context
